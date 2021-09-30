@@ -8,7 +8,7 @@ class BasicField(AbstractField):
         self._attrs = kwargs
 
     def __str__(self):
-        return f'<PyStruct Field: {self._name}: \"{self._struct.format}\">'
+        return f'<PyStruct Field: \"{self._struct.format}\">'
 
     def _pack(self, val):
         return self._struct.pack(val)

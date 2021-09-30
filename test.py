@@ -21,5 +21,13 @@ class CStructTests(unittest.TestCase):
         with self.assertRaises(AttributeError):
             s.c = 5
 
+    def test_basicpack(self):
+        s = BasicStruct()
+
+        s.a = 9
+        s.b = 3
+
+        self.assertEqual(s._pack(), b'\x00\x00\x00\x09\x03')
+
 if __name__ == "__main__":
     unittest.main()
