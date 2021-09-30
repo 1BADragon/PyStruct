@@ -1,4 +1,5 @@
 import struct
+from typing import overload
 
 from .abstractfield import AbstractField
 

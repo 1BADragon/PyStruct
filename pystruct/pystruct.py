@@ -25,4 +25,8 @@ class PyStruct(metaclass=PyStructClassMembers):
 
         return offset
          
-    
+    def __setattr__(self, name, value):
+        try:
+            self._fields[name]._visit_setter(self, name, value)
+        except (KeyError, NotImplementedError):
+            super(PyStruct, self).__setattr__(name, value)

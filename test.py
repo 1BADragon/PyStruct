@@ -6,7 +6,8 @@ from pystruct import *
 class BasicStruct(PyStruct):
     a = field(u32)
     b = field(i8)
-class CStructTests(unittest.TestCase):
+    
+class PyStructTests(unittest.TestCase):
     def test_usable(self):
         s = BasicStruct()
         s.a = 34
