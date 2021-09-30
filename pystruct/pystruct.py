@@ -12,11 +12,17 @@ class PyStruct(metaclass=PyStructClassMembers):
         data = bytearray()
 
         for s in self.__slots__:
+            if s is None:
+                raise ValueError("Field {name} not set")
             data += self._fields[s]._pack(getattr(self, s))
 
         return bytes(data)
 
-
     def _unpack(self, data, offset=0):
-        pass            
+        for name, f in self._fields.items():
+            val, offset = f._unpack(data, offset)
+            setattr(self, name, val)
+
+        return offset
+         
     

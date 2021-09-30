@@ -14,7 +14,9 @@ class BasicField(AbstractField):
         return self._struct.pack(val)
 
     def _unpack(self, data, offset=0):
-        return self._struct.unpack_from(data, offset)[0]
+        val = self._struct.unpack_from(data, offset)[0]
+        offset += self._struct.size
+        return (val, offset)
 
     @property
     def size(self):

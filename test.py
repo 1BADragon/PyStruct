@@ -29,5 +29,26 @@ class CStructTests(unittest.TestCase):
 
         self.assertEqual(s._pack(), b'\x00\x00\x00\x09\x03')
 
+    def test_basicunpack(self):
+        s = BasicStruct()
+
+        s._unpack(b'\x00\x00\x00\x09\x03')
+
+        self.assertEqual(s.a, 9)
+        self.assertEqual(s.b, 3)
+
+    def test_compat(self):
+        s = BasicStruct()
+        s2 = BasicStruct()
+
+        s.a = 9
+        s.b = 34
+
+        s2._unpack(s._pack())
+
+        self.assertEqual(s.a, 9)
+        self.assertEqual(s.b, 34)
+
+
 if __name__ == "__main__":
     unittest.main()
