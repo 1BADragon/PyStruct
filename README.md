@@ -40,6 +40,6 @@ Messages serialized on either the C language struct or in PyStruct should be com
 ## Road Map
 Planned features for PyStruct are:
 
-  [x] basic struct definition
-  [ ] nested structs
-  [ ] fixed-sized strings (character arrays) 
+  - [x] basic struct definition
+  - [ ] nested structs
+  - [ ] fixed-sized strings (character arrays) 
