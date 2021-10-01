@@ -1,5 +1,4 @@
 import collections
-from typing import OrderedDict
 
 from .fields.abstractfield import AbstractField
 
@@ -13,7 +12,7 @@ class PyStructClassMembers(type):
                 if key not in ('__module__', '__qualname__')]
 
         slots = list()
-        fields = OrderedDict()
+        fields = collections.OrderedDict()
 
         for k, v in classdict.items():
             if isinstance(v, AbstractField):

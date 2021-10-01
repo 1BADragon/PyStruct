@@ -11,6 +11,13 @@ class BasicStruct(PyStruct):
 class ArrayStruct(PyStruct):
     a = field(u32)
     arr = field(Array(u32, 4, default=0))
+
+class PropertyStruct(PyStruct):
+    a = field(u32)
+
+    @property
+    def even(self):
+        return self.a % 2 == 0
     
 class PyStructTests(unittest.TestCase):
     def test_usable(self):
@@ -76,6 +83,13 @@ class PyStructTests(unittest.TestCase):
 
         self.assertEqual(s.a, 34)
         self.assertEqual(s.arr[3], 45)
+
+    def test_properties(self):
+        s = PropertyStruct()
+
+        s.a = 56
+
+        self.assertEqual(s.even, True)
 
 
 if __name__ == "__main__":
