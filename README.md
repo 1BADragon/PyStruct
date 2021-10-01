@@ -42,5 +42,5 @@ Planned features for PyStruct are:
 
   - [x] basic struct definition
   - [ ] nested structs
-  - [ ] arrays
+  - [x] arrays
   - [ ] fixed-sized strings (character arrays) 

@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 import unittest
+import struct
 
 from pystruct import *
 
 class BasicStruct(PyStruct):
     a = field(u32)
     b = field(i8)
+
+class ArrayStruct(PyStruct):
+    a = field(u32)
+    arr = field(Array(u32, 4, default=0))
     
 class PyStructTests(unittest.TestCase):
     def test_usable(self):
@@ -49,6 +54,28 @@ class PyStructTests(unittest.TestCase):
 
         self.assertEqual(s.a, 9)
         self.assertEqual(s.b, 34)
+        
+    def test_empty(self):
+        s = BasicStruct()
+
+        with self.assertRaises(ValueError):
+            s._pack()
+
+    def test_packarray(self):
+        s = ArrayStruct()
+
+        s.a = 34
+        s.arr[3] = 45
+
+        self.assertEqual(s._pack(), struct.pack("!IIIII", 34, 0, 0, 0, 45))
+
+    def test_unpackarray(self):
+        s = ArrayStruct()
+
+        s._unpack(struct.pack("!IIIII", 34, 0, 0, 0, 45))
+
+        self.assertEqual(s.a, 34)
+        self.assertEqual(s.arr[3], 45)
 
 
 if __name__ == "__main__":

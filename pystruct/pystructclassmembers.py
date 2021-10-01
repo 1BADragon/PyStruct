@@ -1,7 +1,7 @@
 import collections
 from typing import OrderedDict
 
-from .abstractfield import AbstractField
+from .fields.abstractfield import AbstractField
 
 class PyStructClassMembers(type):
     @classmethod
