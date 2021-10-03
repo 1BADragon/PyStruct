@@ -98,7 +98,8 @@ Nested struct are also featured:
 struct inner {
     uint32_t a;
     uint32_t b;
-}
+};
+
 struct Msg {
     uint32_t field1;
     struct inner field2; 
@@ -114,11 +115,10 @@ class inner(PyStruct):
     a = field(u32)
     b = field(u32)
 
-class Msg {
+class Msg(PyStruct):
     field1 = field(u32)
     field2 = field(inner)  # as a scalar field
     field3 = field(Array(inner, 2)) # and as array
-}
 ```
 
 </td>
