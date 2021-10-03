@@ -22,7 +22,7 @@ class ArrayField(AbstractField):
         for _ in range(self._size):
             val, offset = self._inner._unpack(data, offset)
             l.append(val)
-        return l, offset
+        return (l, offset)
 
     def _visit_setter(self, sruct, name, val):
         raise NotImplementedError
@@ -33,4 +33,7 @@ class ArrayField(AbstractField):
 
     @property
     def default(self):
-        return [self._attrs.get('default', None)] * self._size
+        try:
+            return [self._inner.default for _ in range(self._size)]
+        except (AttributeError, NotImplementedError):
+            return [self._attrs.get('default', None) for _ in range(self._size)]

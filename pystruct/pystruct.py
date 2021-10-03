@@ -28,5 +28,9 @@ class PyStruct(metaclass=PyStructClassMembers):
     def __setattr__(self, name, value):
         try:
             self._fields[name]._visit_setter(self, name, value)
-        except (KeyError, NotImplementedError):
-            super(PyStruct, self).__setattr__(name, value)
+        except NotImplementedError:
+            pass
+        except KeyError:
+            raise AttributeError(f'{type(self)} object has not field {name}')
+        
+        super(PyStruct, self).__setattr__(name, value)

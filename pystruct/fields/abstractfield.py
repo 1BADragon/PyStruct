@@ -7,7 +7,7 @@ class AbstractField(ABC):
     def _unpack(self, data, offset=0):
         raise NotImplementedError
 
-    def _visit_setter(self, sruct, name, val):
+    def _visit_setter(self, struct, name, val):
         raise NotImplementedError
 
     @property

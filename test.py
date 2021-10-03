@@ -12,6 +12,14 @@ class ArrayStruct(PyStruct):
     a = field(u32)
     arr = field(Array(u32, 4, default=0))
 
+class NestedStruct(PyStruct):
+    a = field(u32)
+    b = field(BasicStruct)
+
+class NestedArraySruct(PyStruct):
+    a = field(u32)
+    b = field(Array(BasicStruct, 2))
+
 class PropertyStruct(PyStruct):
     a = field(u32)
 
@@ -65,8 +73,7 @@ class PyStructTests(unittest.TestCase):
     def test_empty(self):
         s = BasicStruct()
 
-        with self.assertRaises(ValueError):
-            s._pack()
+        self.assertEqual(s._pack(), struct.pack("!IB", 0, 0))
 
     def test_packarray(self):
         s = ArrayStruct()
@@ -90,6 +97,26 @@ class PyStructTests(unittest.TestCase):
         s.a = 56
 
         self.assertEqual(s.even, True)
+
+    def test_nested(self):
+        s = NestedStruct()
+
+        s.a = 32
+        s.b.a = 45
+        s.b.b = 23
+
+        self.assertEqual(s._pack(), struct.pack("!IIB", 32, 45, 23))
+
+    def test_nested_array(self):
+        s = NestedArraySruct()
+
+        s.a = 32
+        s.b[0].a = 45
+        s.b[0].b = 23
+        s.b[1].a = 33
+        s.b[1].b = 78
+
+        self.assertEqual(s._pack(), struct.pack("!IIBIB", 32, 45, 23, 33, 78))
 
 
 if __name__ == "__main__":

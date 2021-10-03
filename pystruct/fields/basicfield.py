@@ -28,4 +28,4 @@ class BasicField(AbstractField):
 
     @property
     def default(self):
-        return self._attrs.get('default', None)
+        return self._attrs.get('default', 0)
