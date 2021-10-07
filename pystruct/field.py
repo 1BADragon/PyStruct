@@ -1,33 +1,15 @@
-import struct
+from pystruct.fields.stringfield import StringField
+from .fields.basicfield import BasicField
+from .fields.structfield import StructField
+from .fieldspec import FieldSpec
+from .pystruct import PyStruct
 
-from .abstractfield import AbstractField
-
-class BasicField(AbstractField):
-    def __init__(self, fmt, **kwargs):
-        self._struct = struct.Struct(fmt)
-        self._attrs = kwargs
-
-    def __str__(self):
-        return f'<PyStruct Field: {self._name}: \"{self._struct.format}\">'
-
-    def _pack(self, val):
-        return self._struct.pack(val)
-
-    def _unpack(self, data, offset=0):
-        return self._struct.unpack_from(data, offset)[0]
-
-    @property
-    def size(self):
-        return self._struct.size
-
-    @property
-    def default(self):
-        return self._attrs.get('default', None)
-
-
-
-def field(type_spec):
+def field(type_spec, **kwargs):
     if isinstance(type_spec, str):
-        return BasicField(type_spec)
+        return BasicField(type_spec, **kwargs)
+    elif isinstance(type_spec, FieldSpec):
+        return type_spec.build_field(**kwargs)
+    elif issubclass(type_spec, PyStruct):
+        return StructField(type_spec, **kwargs)
     
     raise ValueError(f'{type_spec} cannot be coerced into a field')
