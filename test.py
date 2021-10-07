@@ -26,6 +26,10 @@ class PropertyStruct(PyStruct):
     @property
     def even(self):
         return self.a % 2 == 0
+
+class StringStruct(PyStruct):
+    a = field(u32)
+    s = field(String(16))
     
 class PyStructTests(unittest.TestCase):
     def test_usable(self):
@@ -117,6 +121,22 @@ class PyStructTests(unittest.TestCase):
         s.b[1].b = 78
 
         self.assertEqual(s._pack(), struct.pack("!IIBIB", 32, 45, 23, 33, 78))
+
+    def test_string_pack(self):
+        s = StringStruct()
+
+        s.a = 32
+        s.s = "a" * 16
+
+        self.assertEqual(s._pack(), struct.pack("!I", 32) + b"a" * 16)
+
+    def test_string_unpack(self):
+        s = StringStruct()
+
+        s._unpack(struct.pack("!I", 32) + b'a' * 16)
+
+        self.assertEqual(s.a, 32)
+        self.assertEqual(s.s, b'a' * 16)
 
 
 if __name__ == "__main__":

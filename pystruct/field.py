@@ -1,3 +1,4 @@
+from pystruct.fields.stringfield import StringField
 from .fields.basicfield import BasicField
 from .fields.structfield import StructField
 from .fieldspec import FieldSpec

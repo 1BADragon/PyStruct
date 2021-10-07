@@ -1,5 +1,6 @@
 from .fieldspec import FieldSpec
 from .fields.arrayfield import ArrayField
+from .fields.stringfield import StringField
 
 u8 = '!B'
 i8 = '!b'
@@ -19,3 +20,10 @@ class Array(FieldSpec):
     def build_field(self):
         return ArrayField(self._spec, self._size, **self._attrs)
 
+class String(FieldSpec):
+    def __init__(self, size, **kwargs):
+        self._size = size
+        self._attrs = kwargs
+
+    def build_field(self):
+        return StringField(self._size, **self._attrs)
