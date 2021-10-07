@@ -8,7 +8,7 @@ Planned features for PyStruct are:
   - [x] basic struct definition
   - [x] nested structs
   - [x] arrays
-  - [ ] fixed-sized strings (character arrays) 
+  - [x] fixed-sized strings (character arrays) 
 
 ## Basic Usage
 PyStruct's purpose is to add a compatibility layer for communication with C 
